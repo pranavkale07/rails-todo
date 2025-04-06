@@ -32,3 +32,85 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+/.bundle
+
+# Ignore all environment files.
+/.env*
+/.env.*
+
+# Ignore logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# Ignore storage (uploaded files in development and SQLite databases).
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/
+!/tmp/storage/.keep
+
+# Ignore compiled assets.
+/public/assets
+/public/packs/
+/public/packs-test/
+/public/uploads/
+
+# Ignore node modules and package manager lock files.
+/node_modules
+/yarn.lock
+/pnpm-lock.yaml
+/.pnp
+.pnp.js
+
+# Ignore the master key for credentials and other secrets.
+/config/master.key
+/config/credentials.yml.enc
+
+# Ignore system-specific files.
+.DS_Store
+*.swp
+*.swo
+.idea/
+/.vscode/
+/*.iml
+
+# Ignore testing-related files.
+/coverage/
+/spec/examples.txt
+/capybara-*.html
+
+# Ignore byebug history.
+.byebug_history
+
+# Ignore Spring server files.
+/spring/
+/spring.pid
+
+# Ignore Puma state files.
+/tmp/pids/server.pid
+
+# Ignore database-related files.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-wal
+/db/*.sqlite3-shm
+
+# Ignore Rails cache files.
+/tmp/cache/
+
+# Ignore dotenv files (if using dotenv for env variables).
+/.env
+/.env.*
+
+# Ignore AWS S3 cache (if applicable).
+/.s3-cache
+
+/structure.txt
