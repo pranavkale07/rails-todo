@@ -1,0 +1,39 @@
+<div class="text-center py-5">
+  <h1 class="display-4 fw-bold mb-3">Welcome to Taskify</h1>
+  <p class="lead mb-4">
+    Manage your tasks efficiently, stay organized, and never miss a deadline.
+  </p>
+  <% if logged_in? %>
+    <%= link_to "View My Tasks", tasks_path, class: "btn btn-success btn-lg px-4" %>
+  <% else %>
+    <%= link_to "Get Started", signup_path, class: "btn btn-primary btn-lg px-4 me-2" %>
+    <%= link_to "Login", login_path, class: "btn btn-outline-primary btn-lg px-4" %>
+  <% end %>
+</div>
+
+<div class="row text-center mt-5">
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">Simple Interface</h5>
+        <p class="card-text">Easily add, update, and delete tasks in just a few clicks.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mt-4 mt-md-0">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">Stay Organized</h5>
+        <p class="card-text">Prioritize tasks, set due dates, and track progress efficiently.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mt-4 mt-md-0">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">Secure and Fast</h5>
+        <p class="card-text">Built with Rails and Bootstrap for a responsive, secure experience.</p>
+      </div>
+    </div>
+  </div>
+</div>

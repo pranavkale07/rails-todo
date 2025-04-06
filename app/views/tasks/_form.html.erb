@@ -1,0 +1,15 @@
+<%= form_with(model: task, local: true, html: { class: "needs-validation" }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label fw-bold" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Enter task title" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label fw-bold" %>
+    <%= form.text_area :description, class: "form-control", rows: 5, placeholder: "Describe the task..." %>
+  </div>
+
+  <div class="d-grid">
+    <%= form.submit class: "btn btn-success btn-lg" %>
+  </div>
+<% end %>

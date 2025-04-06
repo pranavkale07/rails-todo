@@ -1,0 +1,9 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4 fw-bold">Edit Task</h2>
+
+  <%= render "form", task: @task %>
+
+  <div class="text-center mt-3">
+    <%= link_to "Back", tasks_path, class: "btn btn-secondary" %>
+  </div>
+</div>
