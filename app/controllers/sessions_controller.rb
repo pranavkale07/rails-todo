@@ -4,13 +4,26 @@ class SessionsController < ApplicationController
     end
 
     def create
-        user = User.find_by(email: params[:email]&.downcase&.strip)
+        email = params[:session][:email]&.downcase&.strip
+        password = params[:session][:password]
+        
+        Rails.logger.info "Attempting login with email: #{email}"
+        user = User.find_by(email: email)
 
-        if user&.authenticate(params[:password])
-            session[:user_id] = user.id
-            flash[:notice] = "Logged in successfully"
-            redirect_to root_path
+        if user
+            Rails.logger.info "User found: #{user.email}"
+            if user.authenticate(password)
+                Rails.logger.info "Password authentication successful"
+                session[:user_id] = user.id
+                flash[:notice] = "Logged in successfully"
+                redirect_to root_path
+            else
+                Rails.logger.warn "Password authentication failed for user: #{user.email}"
+                flash.now[:alert] = "Invalid email or password"
+                render :new, status: :unprocessable_entity
+            end
         else
+            Rails.logger.warn "No user found with email: #{email}"
             flash.now[:alert] = "Invalid email or password"
             render :new, status: :unprocessable_entity
         end

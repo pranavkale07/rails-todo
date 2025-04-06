@@ -27,7 +27,11 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy", as: "logout"
 
   # Tasks
-  resources :tasks
+  resources :tasks do
+    member do
+      patch :toggle_status
+    end
+  end
   
 
 end
