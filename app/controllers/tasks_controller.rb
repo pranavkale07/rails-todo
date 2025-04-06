@@ -45,12 +45,30 @@ class TasksController < ApplicationController
     def create
       @task = current_user.tasks.build(task_params)
   
-      if @task.save
-        flash[:notice] = "Task created successfully!"
-        redirect_to tasks_path
-      else
-        flash.now[:alert] = @task.errors.full_messages.join(", ")
-        render :new, status: :unprocessable_entity
+      respond_to do |format|
+        if @task.save
+          format.html do
+            flash[:notice] = "Task created successfully!"
+            redirect_to tasks_path
+          end
+          format.turbo_stream do
+            flash.now[:notice] = "Task created successfully!"
+            redirect_to tasks_path
+          end
+        else
+          format.html do
+            flash.now[:alert] = @task.errors.full_messages.join(", ")
+            render :new, status: :unprocessable_entity
+          end
+          format.turbo_stream do
+            flash.now[:alert] = @task.errors.full_messages.join(", ")
+            render turbo_stream: turbo_stream.replace(
+              "new_task_form",
+              partial: "form",
+              locals: { task: @task }
+            )
+          end
+        end
       end
     end
   
@@ -58,12 +76,30 @@ class TasksController < ApplicationController
     end
   
     def update
-      if @task.update(task_params)
-        flash[:notice] = "Task updated successfully!"
-        redirect_to tasks_path
-      else
-        flash.now[:alert] = @task.errors.full_messages.join(", ")
-        render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        if @task.update(task_params)
+          format.html do
+            flash[:notice] = "Task updated successfully!"
+            redirect_to tasks_path
+          end
+          format.json do
+            render json: {
+              success: true,
+              message: "Task updated successfully"
+            }
+          end
+        else
+          format.html do
+            flash.now[:alert] = @task.errors.full_messages.join(", ")
+            render :edit, status: :unprocessable_entity
+          end
+          format.json do
+            render json: {
+              success: false,
+              message: @task.errors.full_messages.join(", ")
+            }, status: :unprocessable_entity
+          end
+        end
       end
     end
   
@@ -81,12 +117,31 @@ class TasksController < ApplicationController
     def toggle_status
       new_status = @task.status == 'completed' ? 'pending' : 'completed'
       
-      if @task.update(status: new_status)
-        flash[:notice] = "Task marked as #{new_status}"
-        redirect_to tasks_path
-      else
-        flash[:alert] = @task.errors.full_messages.join(", ")
-        redirect_to @task
+      respond_to do |format|
+        if @task.update(status: new_status)
+          format.html do
+            flash[:notice] = "Task marked as #{new_status}"
+            redirect_to tasks_path
+          end
+          format.json do
+            render json: {
+              success: true,
+              message: "Task marked as #{new_status}",
+              new_status: new_status
+            }
+          end
+        else
+          format.html do
+            flash[:alert] = @task.errors.full_messages.join(", ")
+            redirect_to @task
+          end
+          format.json do
+            render json: {
+              success: false,
+              message: @task.errors.full_messages.join(", ")
+            }, status: :unprocessable_entity
+          end
+        end
       end
     end
   
